@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="FibonacciSphere2"
+  standalone_source="FibonacciSphere2_standalone.lpr"
+  game_units="GameInitialize"
+  qualified_name="com.mycompany.FibonacciSphere2"
+  caption="Fibonacci Sphere 2"
+>
+  <compiler_options>
+    <search_paths>
+      <path value="code/" />
+    </search_paths>
+  </compiler_options>
+</project>

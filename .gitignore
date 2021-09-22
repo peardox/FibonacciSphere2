@@ -1,0 +1,15 @@
+# Files ignored by GIT version control
+
+# Build tool (and compiler) temporary output
+castle-engine-output
+
+# Unix executable
+FibonacciSphere2
+# Windows executable
+FibonacciSphere2.exe
+# Library files placed alongside Windows executable
+*.dll
+grab.png
+
+# May contain secret data (your Android keystore username and password)
+AndroidAntProperties.txt

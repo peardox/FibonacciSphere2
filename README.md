@@ -1,5 +1,7 @@
 # Fibonacci Sphere 2
 
+![Preview](Preview.jpg)
+
 Using [Castle Game Engine](https://castle-engine.io/).
 
 ## Building

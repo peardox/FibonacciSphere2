@@ -71,7 +71,7 @@ type
 
 var
   StateMain: TStateMain;
-  NvOptimusEnablement: Cardinal = 1; export;
+  // NvOptimusEnablement: Cardinal = 1; export;
   // AmdPowerXpressRequestHighPerformance: LongInt = 1; export;
 
 const
@@ -147,6 +147,7 @@ var
   i: Integer;
 begin
   inherited;
+  ApplicationProperties.LimitFPS := 0;
   DesignUrl := 'castle-data:/gamestatemain.castle-user-interface';
   SavedTheta := 0;
   SecsPerRot := 15;

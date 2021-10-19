@@ -71,10 +71,12 @@ type
 
 var
   StateMain: TStateMain;
+  // NvOptimusEnablement: Cardinal = 1; export;
+  // AmdPowerXpressRequestHighPerformance: LongInt = 1; export;
 
 const
   ScaleMultiplier = 0.5;
-  MinSphereObjs   = 64;
+  MinSphereObjs   = 128;
   ViewDistance    = 3;
   BootCount       = 5;
   BootStrapLabel  = 'Press the Spacebar to begin' + LineEnding;
@@ -145,10 +147,11 @@ var
   i: Integer;
 begin
   inherited;
+  ApplicationProperties.LimitFPS := 100;
   DesignUrl := 'castle-data:/gamestatemain.castle-user-interface';
   SavedTheta := 0;
   SecsPerRot := 15;
-  SphereObjs := 64;
+  SphereObjs := MinSphereObjs;
   RotateSphere := True;
   CameraAtOrigin := False;
   LoadTimer := 0;
@@ -442,6 +445,7 @@ var
   Theta: Single;
   Radius: Single;
   Idx: Integer;
+  BuildTimer: Int64;
   RandomModel: Integer;
   ObjRotation: TVector4;
 begin
@@ -462,6 +466,7 @@ begin
 
   // Golden angle in radians
   Phi := pi * (3 - sqrt(5));
+  BuildTimer := CastleGetTickCount64;
 
   for Idx := 0 to ObjCount -1 do
     begin
@@ -471,7 +476,7 @@ begin
         end;
 
       // Adapted from the StackOverflow code
-      LabelBootStrap.Caption := 'Building scene for ' + IntToStr(SphereObjs) + ' objects.' + LineEnding + 'Adding model ' + IntToStr(Idx + 1);
+      LabelBootStrap.Caption := 'Building scene for ' + IntToStr(SphereObjs) + ' objects.' + LineEnding + 'Adding model ' + IntToStr(Idx + 1) + ' (' + FormatFloat('###', (CastleGetTickCount64 - BuildTimer)/ Idx) + ' ms per object)';
       Application.ProcessAllMessages;
 
       YPos := 1 - (Idx / (ObjCount - 1)) * 2;
@@ -496,7 +501,8 @@ begin
     end;
 
   LabelBootStrap.Caption := 'Scene constructed for ' + IntToStr(SphereObjs) + ' objects.' + LineEnding +
-    'Elapsed time = ' + FormatFloat('###0.000', (CastleGetTickCount64 - LoadTimer) / 1000) + ' seconds' + LineEnding + 'CGE is doing other things ATM ... ';
+    'Elapsed time = ' + FormatFloat('###0.000', (CastleGetTickCount64 - LoadTimer) / 1000) + ' seconds' + 
+	' (' + FormatFloat('###', (CastleGetTickCount64 - BuildTimer)/ Idx) + ' ms per object)' + LineEnding + 'CGE is doing other things ATM ... ';
   Application.ProcessAllMessages;
 
   // The group now contains ObjCount objects in a Spherical arrangement
